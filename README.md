@@ -1,1 +1,0 @@
-[![Coverage Status](https://coveralls.io/repos/github/marcosph-hub/modificacion-05-05/badge.svg?branch=main)](https://coveralls.io/github/marcosph-hub/modificacion-05-05?branch=main)
