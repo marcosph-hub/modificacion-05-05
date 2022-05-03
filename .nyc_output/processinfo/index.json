@@ -1,0 +1,1 @@
+{"processes":{"b953a1cc-e248-4a75-b1f4-591fb3a902d0":{"parent":null,"children":["c130cdeb-2696-4540-ae7a-07ed35cd5631"]},"c130cdeb-2696-4540-ae7a-07ed35cd5631":{"parent":"b953a1cc-e248-4a75-b1f4-591fb3a902d0","children":[]}},"files":{"/home/usuario/DSI/modificacion-05-05/src/index.ts":["c130cdeb-2696-4540-ae7a-07ed35cd5631"]},"externalIds":{}}
