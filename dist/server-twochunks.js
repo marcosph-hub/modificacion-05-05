@@ -20,14 +20,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const net = __importStar(require("net"));
-net.createServer((connection) => {
+const server = net.createServer((connection) => {
     console.log('A client has connected.');
-    connection.write(`Connection established.`);
-    connection.end();
-    connection.write(`Second message sent.`);
-    connection.on('close', () => {
-        console.log('A client has disconnected.');
+    const firstData = '{"type": "change", "prevSize": 13';
+    const secondData = ', "currSize": 27}\n';
+    connection.write(firstData);
+    const timer = setTimeout(() => {
+        connection.write(secondData);
+        connection.end();
+    }, 500);
+    connection.on('end', () => {
+        clearTimeout(timer);
     });
-}).listen(60300, () => {
+    connection.on('close', () => {
+        console.log('A client has disconnected');
+    });
+});
+server.listen(60300, () => {
     console.log('Waiting for clients to connect.');
 });
