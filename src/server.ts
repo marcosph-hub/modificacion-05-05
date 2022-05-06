@@ -4,24 +4,29 @@ import {spawn} from 'child_process';
 
 net.createServer((connection => {
   console.log('A client has connected.');
-   //connection.write()
-   //let jsondata = '';
-   connection.on('data', (clientMessage) => {
-    const CLIENT_MESSAGE = JSON.stringify(clientMessage);
-     //jsondata += clientMessage
-     //consol
-    
-   });
-   connection.on('end', () => {
-    //const CLIENT_MESSAGE = JSON.parse(wholeData);
-    /*const JSONcommand = CLIENT_MESSAGE.command;
+
+  let JSON_CLIENT_MESSAGE = '';
+  connection.on('data', (clientMessage) => {
+    console.log(`Decoding client require`)
+    JSON_CLIENT_MESSAGE = String(clientMessage);
+    const CLIENT_MESSAGE = JSON.parse(JSON_CLIENT_MESSAGE);
+    const JSONcommand = CLIENT_MESSAGE.command;
     const JSONoptions = CLIENT_MESSAGE.options;
-    const JSONfilename = CLIENT_MESSAGE.filename;*/
+    const JSONfilename = CLIENT_MESSAGE.filename;
 
-    //const cat = spawn (`${JSONcommand}`, [`${JSONoptions}`, `${JSONfilename}`])
-
+    console.log(`Executing command ${JSONcommand}`);
+    const cat = spawn (`${JSONcommand}`, [`${JSONoptions}`, `${JSONfilename}`]);
+    let catOutput = "";
+    cat.stdout.on('data', (catdata) => {
+      catOutput += catdata;
+      console.log(`Sending data to client ${catOutput}`)
+      connection.write(catOutput)
+    });
   });
 
+  connection.on('end', () => {
+    console.log("Message sended from server to client");
+  });
 
 })).listen(60300, () => {
   console.log('Waiting for clients to connect.')
